@@ -23,10 +23,16 @@ export function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
+    let scrolled = window.scrollY > 20;
+    setIsScrolled(scrolled);
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const nowScrolled = window.scrollY > 20;
+      if (nowScrolled !== scrolled) {
+        scrolled = nowScrolled;
+        setIsScrolled(nowScrolled);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
