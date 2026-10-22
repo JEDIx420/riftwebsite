@@ -1,0 +1,35 @@
+# RIFT — Verifiable Reconciliation Infrastructure
+> Deterministic reconciliation, discrepancy investigation, and machine-readable evidence for enterprise data operations.
+
+Company: Eagle Eye Research and Deployment Labs Private Limited
+Corporate Domain: https://eagleeyesystems.in
+Product URL: https://rift.lt
+Language: Compiled Native Rust
+Repository: https://github.com/JEDIx420/rift
+
+## Product Summary
+RIFT is a modular, high-performance reconciliation engine designed for enterprise data environments. It detects exact discrepancies between structured datasets, investigates mathematical transformation rules explaining observed differences, and emits machine-readable JSON evidence for automated pipelines.
+
+## Key Technical Specifications
+- Execution Engines: In-memory reference reconciler and external sort/merge reconciler with user-configured sorter buffer allocation budget (--memory-limit-mb).
+- Benchmark Performance (Apple Silicon M4):
+  * 100,000 Records (Parquet): 0.113s median runtime (2.83× warm speedup).
+  * 1,000,000 Records (Parquet): 2.03s runtime, 98.0 MB peak RSS under 64MB sorter budget.
+  * 5,000,000 Records (Parquet): 10.19s runtime, 97.3 MB peak RSS.
+- Supported Input Readers: JSONL, NDJSON, JSON array, CSV, TSV, Parquet, PostgreSQL.
+- Canonical Types: Arbitrary precision fixed-point decimal, typed ISO timestamps, bit-preserving floats, UTF-8 strings, booleans, and typed nulls.
+- Divergence Investigation: Parameterized Graph Discrepancy Search (PGDS) discovers invariant transformation candidates across divergent rows and verifies them with an authoritative D1 verification pass.
+- Exit Codes:
+  * 0: Clean exact match or 100% verified explanation.
+  * 1: Discrepancies detected or partial explanation.
+  * 2: Operational or syntax error.
+
+## Solutions & Industries
+- Payment Settlement: Resolving gateway authorization logs against switch settlement files, missing credits, and chargeback evidence.
+- Core Banking & Ledgers: Multi-currency general ledger and nostro/vostro correspondent account balancing.
+- Data Engineering: Automated ETL regression verification in Apache Airflow and Parquet data pipelines.
+- Enterprise Finance: Cross-ERP journal reconciliation (SAP, Oracle) and SOX audit readiness.
+
+## Official Contact
+General & Enterprise PoC: jay@eagleeyesystems.in
+Corporate Entity: Eagle Eye Research and Deployment Labs Private Limited
