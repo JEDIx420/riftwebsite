@@ -153,8 +153,17 @@ export function DiscrepancyStack3D() {
               return (
                 <div
                   key={item.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isActive}
                   onClick={() => setActiveIndex(idx)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all card-3d ${
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveIndex(idx);
+                    }
+                  }}
+                  className={`p-4 rounded-xl border cursor-pointer transition-all card-3d focus:outline-none focus:ring-1 focus:ring-[#E1252D] ${
                     isActive
                       ? "bg-[#10141D] border-[#E1252D] shadow-xl shadow-[#E1252D]/15 translate-x-2"
                       : "bg-[#0A0D13]/60 border-[#222733] hover:border-[#3D465C] opacity-75 hover:opacity-100"

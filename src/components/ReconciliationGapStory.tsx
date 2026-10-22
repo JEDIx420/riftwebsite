@@ -10,10 +10,36 @@ export function ReconciliationGapStory() {
 
   useEffect(() => {
     if (!autoPlay) return;
-    const interval = setInterval(() => {
-      setStage((prev) => ((prev + 1) % 3) as 0 | 1 | 2);
-    }, 4500);
-    return () => clearInterval(interval);
+    const element = containerRef.current;
+    if (!element) return;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    let visible = false;
+    const update = () => {
+      frame = 0;
+      if (!visible || document.hidden || motionQuery.matches) return;
+      const bounds = element.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      // Divide the visible scroll journey into three deliberate narrative beats.
+      const travel = Math.max(1, bounds.height + viewport);
+      const progress = Math.max(0, Math.min(0.999, (viewport - bounds.top) / travel));
+      const next = Math.min(2, Math.floor(progress * 3)) as 0 | 1 | 2;
+      setStage(prev => prev === next ? prev : next);
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) schedule();
+    }, { rootMargin: "15% 0px" });
+    observer.observe(element);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
   }, [autoPlay]);
 
   return (
@@ -87,7 +113,7 @@ export function ReconciliationGapStory() {
             className="flex items-center gap-1.5 text-xs font-mono text-[#5F6368] hover:text-white"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${autoPlay ? "animate-spin" : ""}`} />
-            <span>{autoPlay ? "Auto-cycling" : "Click to Resume Auto"}</span>
+            <span>{autoPlay ? "Scroll-linked" : "Resume Scroll Sync"}</span>
           </button>
         </div>
 

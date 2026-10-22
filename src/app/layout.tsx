@@ -89,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark">
       <head>
         <meta name="color-scheme" content="dark" />
         <meta name="theme-color" content="#050608" />

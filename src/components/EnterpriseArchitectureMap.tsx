@@ -83,8 +83,17 @@ export function EnterpriseArchitectureMap() {
             return (
               <div
                 key={node.id}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
                 onClick={() => setSelectedNode(node)}
-                className={`p-6 rounded-2xl border cursor-pointer transition-all card-3d ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelectedNode(node);
+                  }
+                }}
+                className={`p-6 rounded-2xl border cursor-pointer transition-all card-3d focus:outline-none focus:ring-1 focus:ring-[#E1252D] ${
                   isSelected
                     ? "bg-[#121622] border-[#E1252D] shadow-xl shadow-[#E1252D]/15 scale-[1.02]"
                     : "bg-[#090C12]/80 border-[#222733] hover:border-[#3D465C] opacity-80 hover:opacity-100"

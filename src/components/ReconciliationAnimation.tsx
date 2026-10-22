@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Play, Pause, RefreshCw, CheckCircle2, AlertTriangle, FileCode2 } from "lucide-react";
 
 interface RecordPacket {
@@ -16,6 +16,18 @@ export function ReconciliationAnimation() {
   const [activeStep, setActiveStep] = useState(0);
   const [selectedRecord, setSelectedRecord] = useState<RecordPacket | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { rootMargin: "10% 0px" });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -26,12 +38,12 @@ export function ReconciliationAnimation() {
   }, []);
 
   useEffect(() => {
-    if (!isPlaying || prefersReducedMotion) return;
+    if (!isPlaying || prefersReducedMotion || !isVisible) return;
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % 6);
     }, 1800);
     return () => clearInterval(interval);
-  }, [isPlaying, prefersReducedMotion]);
+  }, [isPlaying, prefersReducedMotion, isVisible]);
 
   const sampleDiscrepancies: RecordPacket[] = [
     {
@@ -65,7 +77,7 @@ export function ReconciliationAnimation() {
   ];
 
   return (
-    <div className="w-full bg-[#0F1115] border border-[#222733] rounded-xl p-5 md:p-8 relative overflow-hidden red-glow-subtle">
+    <div ref={containerRef} className="w-full bg-[#0F1115] border border-[#222733] rounded-xl p-5 md:p-8 relative overflow-hidden red-glow-subtle">
       {/* Background Grid Lines */}
       <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
