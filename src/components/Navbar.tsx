@@ -10,7 +10,6 @@ import {
   Terminal, 
   BarChart3, 
   ShieldCheck, 
-  Layers, 
   CreditCard, 
   Building2, 
   Database, 
@@ -31,7 +30,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close dropdowns on route change
   useEffect(() => {
     setMobileMenuOpen(false);
     setSolutionsOpen(false);
@@ -81,22 +79,22 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[#08090B]/90 backdrop-blur-md border-b border-[#222733] py-3.5"
+          ? "bg-[#050608]/90 backdrop-blur-xl border-b border-[rgba(255,255,255,0.08)] py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded bg-[#14171E] border border-[#2D3343] flex items-center justify-center group-hover:border-[#E1252D] transition-colors">
-              <span className="font-mono font-black text-sm text-[#E1252D]">R</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 rounded-lg bg-[#0F1218] border border-[#2D3343] flex items-center justify-center group-hover:border-[#E1252D] transition-colors shadow-md shadow-black">
+              <span className="font-mono font-black text-xs text-[#E1252D]">R</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black tracking-wider text-[#F4F4F6] flex items-center">
-                RIFT<span className="text-[#E1252D] ml-0.5 font-bold">.</span>
+              <span className="font-display font-black text-2xl tracking-wider text-white flex items-center leading-none">
+                RIFT<span className="text-[#E1252D] ml-0.5">.</span>
               </span>
-              <span className="text-[10px] tracking-widest text-[#8E929B] font-mono uppercase -mt-1">
+              <span className="text-[9px] tracking-widest text-[#5F6368] font-mono uppercase mt-0.5">
                 EAGLE EYE LABS
               </span>
             </div>
@@ -114,41 +112,40 @@ export function Navbar() {
                     onMouseLeave={() => setSolutionsOpen(false)}
                   >
                     <button
-                      className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider transition-colors ${
                         pathname.startsWith("/solutions")
-                          ? "text-[#F4F4F6]"
-                          : "text-[#8E929B] hover:text-[#F4F4F6]"
+                          ? "text-white font-bold"
+                          : "text-[#9AA0A6] hover:text-white"
                       }`}
                       aria-expanded={solutionsOpen}
                     >
                       {link.name}
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-200 ${
-                          solutionsOpen ? "rotate-180 text-[#E1252D]" : "text-[#8E929B]"
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          solutionsOpen ? "rotate-180 text-[#E1252D]" : "text-[#5F6368]"
                         }`}
                       />
                     </button>
 
-                    {/* Solutions Dropdown Menu */}
                     {solutionsOpen && (
                       <div className="absolute top-full -left-20 pt-3 w-80 animate-in fade-in slide-in-from-top-2 duration-150">
-                        <div className="bg-[#0F1115] border border-[#222733] rounded-lg p-2 shadow-2xl backdrop-blur-xl">
+                        <div className="bg-[#0A0D14]/95 border border-[rgba(255,255,255,0.1)] rounded-xl p-2.5 shadow-2xl backdrop-blur-2xl">
                           {link.items?.map((item) => {
                             const IconComponent = item.icon;
                             return (
                               <Link
                                 key={item.title}
                                 href={item.href}
-                                className="flex items-start gap-3 p-2.5 rounded-md hover:bg-[#14171E] transition-colors group/item"
+                                className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#121622] transition-colors group/item"
                               >
-                                <div className="p-2 rounded bg-[#14171E] border border-[#222733] text-[#8E929B] group-hover/item:text-[#E1252D] group-hover/item:border-[#E1252D]/40 transition-colors">
+                                <div className="p-2 rounded bg-[#07090F] border border-[#222733] text-[#9AA0A6] group-hover/item:text-[#E1252D] group-hover/item:border-[#E1252D]/40 transition-colors">
                                   <IconComponent className="w-4 h-4" />
                                 </div>
                                 <div>
-                                  <div className="text-sm font-semibold text-[#F4F4F6] group-hover/item:text-white">
+                                  <div className="text-xs font-bold text-white group-hover/item:text-[#E1252D] transition-colors">
                                     {item.title}
                                   </div>
-                                  <div className="text-xs text-[#8E929B] mt-0.5 line-clamp-1">
+                                  <div className="text-[11px] text-[#5F6368] mt-0.5 line-clamp-1 font-mono">
                                     {item.desc}
                                   </div>
                                 </div>
@@ -167,8 +164,8 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors ${
-                    isActive ? "text-[#E1252D] font-semibold" : "text-[#8E929B] hover:text-[#F4F4F6]"
+                  className={`text-xs font-mono uppercase tracking-wider transition-colors ${
+                    isActive ? "text-[#E1252D] font-bold" : "text-[#9AA0A6] hover:text-white"
                   }`}
                 >
                   {link.name}
@@ -181,14 +178,14 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               href="/developers"
-              className="px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-[#8E929B] hover:text-[#F4F4F6] border border-[#222733] hover:border-[#3D465C] transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-lg text-xs font-mono text-[#9AA0A6] hover:text-white border border-[#222733] hover:border-[#3D465C] transition-colors flex items-center gap-1.5"
             >
               <Terminal className="w-3.5 h-3.5 text-[#E1252D]" />
               <span>CLI docs</span>
             </Link>
             <Link
               href="/contact?intent=poc"
-              className="px-4 py-2 rounded-md text-xs font-semibold uppercase tracking-wider text-white bg-[#E1252D] hover:bg-[#FF333D] transition-colors shadow-sm shadow-[#E1252D]/30"
+              className="px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider text-white bg-[#E1252D] hover:bg-[#FF333D] transition-colors shadow-md shadow-[#E1252D]/25"
             >
               Discuss a PoC
             </Link>
@@ -198,13 +195,13 @@ export function Navbar() {
           <div className="flex lg:hidden items-center gap-2">
             <Link
               href="/contact?intent=poc"
-              className="px-3 py-1.5 rounded text-xs font-semibold text-white bg-[#E1252D]"
+              className="px-3 py-1.5 rounded-lg text-xs font-mono font-bold text-white bg-[#E1252D]"
             >
               PoC
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#8E929B] hover:text-[#F4F4F6] focus:outline-none"
+              className="p-2 text-[#9AA0A6] hover:text-white"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -214,76 +211,46 @@ export function Navbar() {
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 pt-4 border-t border-[#222733] bg-[#08090B] pb-6 space-y-3 animate-in fade-in duration-200">
-            <Link
-              href="/product"
-              className="block px-3 py-2 text-base font-medium text-[#8E929B] hover:text-white"
-            >
+          <div className="lg:hidden mt-4 pt-4 border-t border-[#222733] bg-[#050608]/95 backdrop-blur-2xl pb-6 space-y-3 font-mono text-xs">
+            <Link href="/product" className="block px-3 py-2 text-[#9AA0A6] hover:text-white uppercase">
               Product
             </Link>
-            <div className="px-3 py-1 text-xs font-mono uppercase text-[#5E6370] tracking-wider">
+            <div className="px-3 py-1 text-[10px] uppercase text-[#5F6368] tracking-widest font-bold">
               Solutions
             </div>
-            <div className="pl-4 space-y-1">
-              <Link
-                href="/solutions/payments"
-                className="block py-1.5 text-sm text-[#8E929B] hover:text-white"
-              >
+            <div className="pl-4 space-y-1.5">
+              <Link href="/solutions/payments" className="block py-1 text-[#9AA0A6] hover:text-white">
                 Payment Settlement
               </Link>
-              <Link
-                href="/solutions/banking"
-                className="block py-1.5 text-sm text-[#8E929B] hover:text-white"
-              >
+              <Link href="/solutions/banking" className="block py-1 text-[#9AA0A6] hover:text-white">
                 Core Banking & Ledgers
               </Link>
-              <Link
-                href="/solutions/data-engineering"
-                className="block py-1.5 text-sm text-[#8E929B] hover:text-white"
-              >
-                Data Engineering
+              <Link href="/solutions/data-engineering" className="block py-1 text-[#9AA0A6] hover:text-white">
+                Data Engineering & ETL
               </Link>
-              <Link
-                href="/solutions/enterprise"
-                className="block py-1.5 text-sm text-[#8E929B] hover:text-white"
-              >
-                Enterprise Finance
+              <Link href="/solutions/enterprise" className="block py-1 text-[#9AA0A6] hover:text-white">
+                Enterprise Finance & ERP
               </Link>
             </div>
-            <Link
-              href="/developers"
-              className="block px-3 py-2 text-base font-medium text-[#8E929B] hover:text-white"
-            >
+            <Link href="/developers" className="block px-3 py-2 text-[#9AA0A6] hover:text-white uppercase">
               Developers & CLI
             </Link>
-            <Link
-              href="/benchmarks"
-              className="block px-3 py-2 text-base font-medium text-[#8E929B] hover:text-white"
-            >
+            <Link href="/benchmarks" className="block px-3 py-2 text-[#9AA0A6] hover:text-white uppercase">
               Benchmarks & Hardware
             </Link>
-            <Link
-              href="/investors"
-              className="block px-3 py-2 text-base font-medium text-[#8E929B] hover:text-white"
-            >
+            <Link href="/investors" className="block px-3 py-2 text-[#9AA0A6] hover:text-white uppercase">
               Investor Centre
             </Link>
-            <Link
-              href="/insights"
-              className="block px-3 py-2 text-base font-medium text-[#8E929B] hover:text-white"
-            >
+            <Link href="/insights" className="block px-3 py-2 text-[#9AA0A6] hover:text-white uppercase">
               Technical Insights
             </Link>
-            <Link
-              href="/company"
-              className="block px-3 py-2 text-base font-medium text-[#8E929B] hover:text-white"
-            >
+            <Link href="/company" className="block px-3 py-2 text-[#9AA0A6] hover:text-white uppercase">
               Company (Eagle Eye)
             </Link>
-            <div className="pt-4 border-t border-[#222733] flex flex-col gap-2">
+            <div className="pt-3 border-t border-[#222733]">
               <Link
-                href="/contact"
-                className="w-full text-center py-2.5 rounded-md text-sm font-semibold text-white bg-[#E1252D]"
+                href="/contact?intent=poc"
+                className="w-full text-center py-2.5 rounded-lg text-xs font-mono font-bold uppercase text-white bg-[#E1252D] block"
               >
                 Discuss a PoC
               </Link>

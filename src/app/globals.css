@@ -3,25 +3,24 @@
 @layer base {
   :root {
     color-scheme: dark;
-    --bg-base: #08090b;
-    --bg-surface: #0f1115;
-    --bg-card: #14171e;
-    --bg-card-hover: #1a1e28;
-    --border-subtle: #222733;
-    --border-focus: #3d465c;
+    --bg-base: #050608;
+    --bg-surface: #0a0c10;
+    --bg-card: #0f1218;
+    --bg-card-hover: #161a23;
+    --border-subtle: rgba(255, 255, 255, 0.07);
+    --border-active: rgba(225, 37, 45, 0.5);
     --accent-red: #e1252d;
     --accent-red-hover: #ff333d;
-    --accent-red-glow: rgba(225, 37, 45, 0.2);
-    --text-primary: #f4f4f6;
-    --text-secondary: #8e929b;
-    --text-muted: #5e6370;
+    --accent-red-glow: rgba(225, 37, 45, 0.35);
+    --text-primary: #f8f9fa;
+    --text-secondary: #9aa0a6;
+    --text-muted: #5f6368;
   }
 
   html {
     background-color: var(--bg-base);
     color: var(--text-primary);
     scroll-behavior: smooth;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 
   body {
@@ -40,48 +39,117 @@
   }
 }
 
+/* Typography Helpers */
+.font-display {
+  font-family: var(--font-barlow-condensed), -apple-system, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains-mono), monospace;
+}
+
+/* Glass & Luminous Effects */
+.glass-panel {
+  background: linear-gradient(135deg, rgba(18, 22, 30, 0.75) 0%, rgba(9, 11, 15, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 48px -12px rgba(0, 0, 0, 0.8);
+}
+
+.glass-panel-glow {
+  background: linear-gradient(135deg, rgba(24, 28, 38, 0.8) 0%, rgba(10, 12, 16, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(225, 37, 45, 0.35);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 35px -8px rgba(225, 37, 45, 0.25),
+    0 30px 60px -15px rgba(0, 0, 0, 0.9);
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.card-3d:hover {
+  transform: translateY(-4px) rotateX(2deg) rotateY(-1deg);
+}
+
+/* Red Luminous Edge Lines */
+.border-gradient-red {
+  border-image: linear-gradient(to right, rgba(225, 37, 45, 0.8), rgba(225, 37, 45, 0.1), transparent) 1;
+}
+
+.red-laser-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(225, 37, 45, 0.8) 50%, transparent 100%);
+}
+
+.white-laser-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+}
+
+/* Noise Texture Overlay */
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090b;
+  background: #050608;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222733;
-  border-radius: 4px;
+  background: #1f2430;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3d465c;
+  background: #e1252d;
 }
 
-/* Utility Animations & Accents */
-.red-glow {
-  box-shadow: 0 0 30px -5px rgba(225, 37, 45, 0.25);
+/* Animation Keyframes */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
 }
 
-.red-glow-subtle {
-  box-shadow: 0 0 20px -8px rgba(225, 37, 45, 0.15);
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
 }
 
-.red-border-glow {
-  border-color: rgba(225, 37, 45, 0.4);
-  box-shadow: inset 0 0 15px -5px rgba(225, 37, 45, 0.15);
+@keyframes streamFlow {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
-/* Subtle Grid Pattern */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+.animate-stream-flow {
+  stroke-dasharray: 200;
+  animation: streamFlow 12s linear infinite;
 }
 
-/* Respect reduced motion */
+/* Reduced Motion Override */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

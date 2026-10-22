@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Barlow_Condensed, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -82,12 +89,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <head>
         <meta name="color-scheme" content="dark" />
-        <meta name="theme-color" content="#08090B" />
+        <meta name="theme-color" content="#050608" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#08090B] text-[#F4F4F6] selection:bg-[#E1252D] selection:text-white`}>
+      <body
+        className={`${inter.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#050608] text-[#F8F9FA] selection:bg-[#E1252D] selection:text-white relative min-h-screen`}
+      >
+        {/* Subtle persistent analog grain overlay */}
+        <div className="fixed inset-0 pointer-events-none z-40 noise-overlay opacity-40" />
         {children}
       </body>
     </html>
